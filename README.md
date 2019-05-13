@@ -308,4 +308,102 @@ cp 7        ;0-7=-7 ==> z=0
 cp 0        ;0-0=0 ==> z=1     
 ```
 
-*Nota: i flags nel simulatore sono rossi quando valgono 1 (attivi)*
+*Nota: i flags nel simulatore diventano rossi quando valgono 1 (attivi)*
+
+## Istruzioni di salto `jp`
+Le istruzioni del microprocessore vengono eseguite in sequenza uno dopo l'altro.  
+La `jp` serve per rompere questa sequenza, al posto di continuare l'esecuzione dall'istruzione successiva, si continua dall'istruzione indicata dall `jp`.
+
+La `jp` è alla base della costruzione del costrutto *`if`* e *`while`*.
+
+### `jp nn`
+Questo è il sakto incondizionato.
+Quando viene eseguita si salta sempre all'istruzione all'indirizzo *nn*, e da li si continua. Naturalmente è possibile utilizzartlo con i tag.
+```
+inizio:
+    ld a, 0
+    ld a, 1
+    jp fine
+    ld a, 2
+
+fine:
+    ld a, 3
+    ld a, 4
+    halt
+``` 
+Il programma parte e vengono eseguite in sequenza `ld a, 0` e `ld a, 1`.  
+Poi viene eseguita la `jp fine`, quindi si salta all'istruzione `ld a, 3` (poichè è quella contenuta all'indirizza taggato da *fine*).  
+L'esecuzione continua e vengono eseguite `ld a, 4` e `halt`.
+
+*Notare che l'istruzione* `ld a, 2` *non verrà mai eseguita*.
+
+***Attenzione a non creare loop infiniti indesiderati:***
+```
+inizio:
+    ld a, 0
+    ld a, 1
+    jp inizio
+    ld a, 2
+
+fine:
+    halt
+``` 
+il programma eseguirà senza mai fermarsi  `ld a, 0` e `ld a, 1`.  
+
+Esempio: scrivere un programma che incrementa l'accumulatore di 1 all'infinito.
+```
+ld a, 0
+inizio:
+    inc a
+    jp inizio
+```
+
+### `jp z, nn` e `jp nz, nn`
+Queste varianti del `jp` vengono usate per fare dei *salti condizionati*.
+- `jp z, nn` salta a *nn* se il flag `z` è attivo;
+- `jp nz, nn` salta a *nn* se il flag `z` non è attivo;
+
+Esempio: scrivere un programma che carica in `b` *1* se l'accumulatore contiene *7*, altrimenti carica in `b` *2*.
+```
+ld a, 7
+cp 7
+jp z, contiene_7
+
+non_contiene_7:
+    ld b, 2 
+    halt
+
+contiene_7:
+    ld b, 1
+    halt
+```
+questo è il caso in qui `a` contiene *7* quindi `jp z, contiene_7`  è vera e il salto viene eseguito, l'esecuzione continua con `ld b, 1` e `halt`.
+
+
+```
+ld a, 5
+cp 7
+jp z, contiene_7
+
+non_contiene_7:
+    ld b, 2 
+    halt
+
+contiene_7:
+    ld b, 1
+    halt
+```
+in questo caso `a` non contiene *7* quindi `jp z, contiene_7` è falsa (`z` non è attivo) e il salto non viene eseguito, l'esecuzione continua con le istruzioni successive `ld b, 2 ` e `halt`.
+
+Il codice qui sopra è un esempio del costrutto *if*:
+```c
+if(a == 7)
+{
+    b=1
+}
+else
+{
+    b=2
+}
+```
+
