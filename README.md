@@ -84,7 +84,6 @@ ma danno errore ad esempio:
 ```
 ld b, (de)
 ld (de), c
-...
 ```
 
 ## Operazioni aritmetiche
@@ -123,7 +122,6 @@ al termine dell'esecuzione mi ritrovo in `a` il numero *3*.
 Servono rispettivamente ad incrementare o decrementare di *1* il registro `r`.  
 `inc a` equivale ad `add a, 1`  
 `dec a` equivale ad `sub a, 1`
-
 ```
 ld b, 0
 inc b
@@ -131,3 +129,47 @@ inc b
 inc b
 ```
 al termine b conterra *3*
+
+## Direttive
+Le direttive possiamo considerarle delle *'istruzioni speciali'* che vengono eseguite prima che parta il programma.
+### `.seg name (abs)` e `.org nn`
+per poter utilizzare `.org`, è necessario che il codice del programma inizi con `.seg`.
+
+`.seg NOME (abs)` assegna il nome *'NOME'* alla porzione di codice che segue la direttiva.
+`.org 0x1020` questa direttiva indica al processore di salvare la traduzione delle istruzioni a partire dall'indirizzo *0x1020*
+```
+.seg main (abs)
+ld a, 1
+ld b, 3
+
+.org 0x1000
+add a, 3
+dec b
+```
+andando sul simulatore possiamo vedere che le prime due istruzioni (`ld a, 1` e `ld b, 3`) sono state tradotte in codice macchina e salvate in memoria nelle 4 celle consecutive a partire dall'indirizzo *0x0000*.  
+Le ultime due istruzioni, visto che sono precedute da `.org 0x1000`, sono salvate a partire dall'indirizzo *0x1000*.
+
+### `.asciz "abc"`
+Questa direttiva serve per salvare in memoria una stringa.  
+Ogni carattere occupa una cella i memoria, e l'ultimo carattere sarà sempre lo *'0'* che sta ad indicare che la stringa è finita.
+```
+.asciz "abc"
+```
+questa istruzione salverà la stringa nel seguente modo:
+
+Ind. memoria | Valore
+--- | ---
+0x0000 | 0x61
+0x0001 | 0x62
+0x0002 | 0x63
+0x0003 | 0x00
+*I valori sono il codice ascci dei caratteri*
+
+### `.db n`
+
+
+
+
+
+
+
