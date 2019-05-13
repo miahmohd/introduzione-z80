@@ -72,7 +72,6 @@ ld hl, 0x0020
 ld (hl), b
 ```
 ***Osservazioni***: utilizzando `hl` è possibile utilizzare un qualsiasi registro per il caricamento anche `a`.
-
 Però se volessi utilizzare un'altro registro a 16 bit diverso da `hl`, quindi o `bc` o `de` il caricamento indiretto funziona solo con il registro `a`.
 Funzionano:
 ```
