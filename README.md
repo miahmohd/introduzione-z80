@@ -295,6 +295,8 @@ L'istruzione `cp` sta per *compare*, viene utilizzato per vedere se nell'accumul
 Se `a` = *n*, allora `a`-*n*=0 quindi `z`= 1  
 Se `a` != *n*, allora `a`-*n* != 0 quindi `z`= 0
 
+`cp r` confronta il valore del registro `r` con l'accumulatore.
+
 **Confronta sempre con l'accumulatore**
 
 Essenzialmente la `cp` ha un funzionamento analogo ad `sub`.  
@@ -317,7 +319,7 @@ La `jp` serve per rompere questa sequenza, al posto di continuare l'esecuzione d
 La `jp` è alla base della costruzione del costrutto *`if`* e *`while`*.
 
 ### `jp nn`
-Questo è il sakto incondizionato.
+Questo è il salto incondizionato.
 Quando viene eseguita si salta sempre all'istruzione all'indirizzo *nn*, e da li si continua. Naturalmente è possibile utilizzartlo con i tag.
 ```
 inizio:
@@ -407,3 +409,139 @@ else
 }
 ```
 
+```
+ld a, 4
+cp 7
+jp nz, non_contiene_7
+
+contiene_7:
+    ld b, 1
+    halt
+
+non_contiene_7:
+    ld b, 2 
+    halt
+```
+variante con `jp nz, nn`
+
+---
+
+
+Vediamo ora come potremmo costruire un ciclo condizionato.  
+
+Voglio scrivere un programma che partendo da 0, incrementi l'accumulatore fino ad arrivare a 10, per poi fermarsi.  
+
+Partiamo dal codice del contatore precedente:
+```
+ld a, 0
+inizio:
+    inc a
+    jp inizio
+```
+qui l'accumulatore viene incrementato all'infinito, ma io voglio che si fermi a *10*.
+
+L'idea è di inserire all'interno del ciclo una salto condizionato che salta **fuori** dal ciclo quando si verifica la condizione: *l'accumulatore è 10*.  
+Una possibile soluzione è:
+```
+ld a, 0
+
+inizio:
+    inc a
+    cp 10
+    jp z, fine
+    jp inizio
+
+fine:
+    halt
+```
+se `a` contiene 10, `cp 10` mi attiva il flag `z`, essendo il flag attivo il salto `jp z, fine` viene eseguito e quindi il programma si ferma.  
+se `a` **non** contiene 10, `cp 10` **non** mi attiva il flag `z`, essendo il flag **non attivo** il salto `jp z, fine` **non** viene eseguito e quindi il programma continua con `jp inizio` e ricomincia il ciclo.
+
+Un altro esempio di ciclo e quello sui caratteri di una stringa.
+```
+ld hl, stringa
+
+inizio:
+    ld a, (hl)
+    cp 0
+    jp z, fine
+    inc hl
+    jp inizio
+
+fine:
+    halt
+
+stringa:
+    .asciz "abcd"
+```
+Partendo dalla prima posizione carico carattere per carattere i valori nell'accumulatore, termino il ciclo quando nell'accumulatore trovo *0* (carattere di fine stringa).
+
+
+# Esercizi
+
+## es 1
+Salvare un numero nella cella di memoria 0x1020, e uno nella cella 0x1021.  
+Scrivi il programma nelle 3 varianti: utilizzando il caricamento diretto, il caricamento indiretto, e  la direttiva `.db`
+
+## es 2
+Fare la somma di due numeri salvati nelle celle consecutive a partire da 0x1020 e salvare il risultato alla cella 0x1000.
+
+## es 3
+Carica in `a`, `b` e in `c` un numero. Calcolare l'espressione `(a+b)-(a+c)` e salvare il risultato in 0x1000.
+Per esempio se `a=7`, `b=5`, `c=2` in 0x1000 devo salvare `(7+5)-(7-2) = 3`
+
+## es 4
+Fare la differenza di due numeri salvati nelle celle consecutive a partire da 0x1020 e salvare il risultato alla cella 0x1000, se i due numeri sono uguali (differenza fa 0), altrimenti salvare il risultato in 0x2000.
+
+## es 5
+Scrivere un programma che decrementa il valore dell'accumulatore finchè non raggiunge lo 0.
+Ad esempio se l'accumulatore contiene 20, il programma deve decrementare `a` fino ad arrivare a 0 per poi fermarsi. (20, 19, 18, 17, 16, ..., 3, 2, 1, 0)
+
+## es 6
+Scrivere un programma che partendo dalla cella di memoria 0x1000 setti le 20 celle consecutive con il valore 0x00.
+
+## es 7
+Scrivere un programma che scrive in memoria a partire dall'indirizzo 0x1000 la sequenza di numeri 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ... fino a 100.
+
+## es 8
+Scrivere un programma che somma il contenuto di 4 celle consecutive situate all'indirizzo 0x1000; caricare le 4 celle utilizzando `.db` ed utilizzando un ciclo calcolare la somma e salvarla nel reg. `c`.  
+*Suggerimento: sai a priori che le celle sono 4, quindi usa un registro come contatore che viene decrementato partendo da 4*
+
+## es 9
+Calcolare la lunghezza di una stringa salvata all'indirizzo 0x1000.
+
+## es 10
+Dati 2 numeri fare la moltiplicazione tra i due numeri, e salvare il risultato in 0x1000.  
+
+## es 10.5
+Dati 2 numeri fare la divisione tra i due numeri, e salvare il risultato in 0x1000. 
+(supponi che i numeri siano uno multiplo dell'altro, quindi facendo le sottrazioni succcessive prima o poi si ottiene 0).
+
+## es 11 (verifica 2017/2018)
+Date 2 stringhe s1 e s2:
+- Determina quale delle due è più corta.
+- Se **s1<=s2 poni `d` = 1**, mentre se **s1 > s2 poni `d` = 2**
+
+## es 12
+Data una stringa salvata all'indirizzo 0x1000, trasformare la stringa in maiuscolo e risalvala nella stessa posizione. (supponi che la stringa abbia solo lettere minuscole)
+
+## es 13
+Data una stringa salvata all'indirizzo 0x1000, scrivi un programma che me la copi all'indirizzo 0x2000. Es "ciao" è da 0x1000 – 0x1003, il programma deve porre "ciao" a 0x2000-0x2003.
+
+## es 14 (verifica 2017/2018)
+Data una stringa salvata a apartire dall’ind 0x1000, scrivi un programma che ponga la stessa stringa in forma maiuscola a partire da 0x2000 Es “ciao” è da 0x1000 – 0x1003, il programma deve porre “CIAO” a 0x2000-0x2003.
+
+## es 15
+Data una stringa calcolare quante volte compare la lettera "a" al suo interno. Salvare il risultato in 0x1000. Ad esempio per "ciao, come va la vita?" bisogna salvare 4
+
+## es 16 
+Data una stringa calcolare quante volte compaiono le vocali. Salvare il risultato in 0x1000.
+Ad esempio per "ciao, come va la vita?" bisogna salvare 9
+
+## es 17 (verifica 2017/2018)
+Date 2 stringhe s1 e s2:
+- Verificare se queste sono uguali o meno.
+- Se queste sono uguali poni a = 1, altrimenti a = 0.
+
+Supponi che le due stringhe abbiano la stessa lunghezza.  
+(Suggerimento: salva i due caratteri nella stessa posizione uno in `a` l'altro in `b` così puoi fare `cp b`....)
