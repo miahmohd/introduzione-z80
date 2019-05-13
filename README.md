@@ -517,7 +517,7 @@ Dati 2 numeri fare la moltiplicazione tra i due numeri, e salvare il risultato i
 Dati 2 numeri fare la divisione tra i due numeri, e salvare il risultato in 0x1000. 
 (supponi che i numeri siano uno multiplo dell'altro, quindi facendo le sottrazioni succcessive prima o poi si ottiene 0).
 
-### es 11 (verifica 2017/2018)
+### es 11
 Date 2 stringhe s1 e s2:
 - Determina quale delle due è più corta.
 - Se **s1<=s2 poni `d` = 1**, mentre se **s1 > s2 poni `d` = 2**
@@ -528,7 +528,7 @@ Data una stringa salvata all'indirizzo 0x1000, trasformare la stringa in maiusco
 ### es 13
 Data una stringa salvata all'indirizzo 0x1000, scrivi un programma che me la copi all'indirizzo 0x2000. Es "ciao" è da 0x1000 – 0x1003, il programma deve porre "ciao" a 0x2000-0x2003.
 
-### es 14 (verifica 2017/2018)
+### es 14
 Data una stringa salvata a apartire dall’ind 0x1000, scrivi un programma che ponga la stessa stringa in forma maiuscola a partire da 0x2000 Es “ciao” è da 0x1000 – 0x1003, il programma deve porre “CIAO” a 0x2000-0x2003.
 
 ### es 15
@@ -538,7 +538,7 @@ Data una stringa calcolare quante volte compare la lettera "a" al suo interno. S
 Data una stringa calcolare quante volte compaiono le vocali. Salvare il risultato in 0x1000.
 Ad esempio per "ciao, come va la vita?" bisogna salvare 9
 
-### es 17 (verifica 2017/2018)
+### es 17
 Date 2 stringhe s1 e s2:
 - Verificare se queste sono uguali o meno.
 - Se queste sono uguali poni a = 1, altrimenti a = 0.
