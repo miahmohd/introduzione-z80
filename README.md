@@ -479,66 +479,66 @@ Partendo dalla prima posizione carico carattere per carattere i valori nell'accu
 
 # Esercizi
 
-## es 1
+### es 1
 Salvare un numero nella cella di memoria 0x1020, e uno nella cella 0x1021.  
 Scrivi il programma nelle 3 varianti: utilizzando il caricamento diretto, il caricamento indiretto, e  la direttiva `.db`
 
-## es 2
+### es 2
 Fare la somma di due numeri salvati nelle celle consecutive a partire da 0x1020 e salvare il risultato alla cella 0x1000.
 
-## es 3
+### es 3
 Carica in `a`, `b` e in `c` un numero. Calcolare l'espressione `(a+b)-(a+c)` e salvare il risultato in 0x1000.
 Per esempio se `a=7`, `b=5`, `c=2` in 0x1000 devo salvare `(7+5)-(7-2) = 3`
 
-## es 4
+### es 4
 Fare la differenza di due numeri salvati nelle celle consecutive a partire da 0x1020 e salvare il risultato alla cella 0x1000, se i due numeri sono uguali (differenza fa 0), altrimenti salvare il risultato in 0x2000.
 
-## es 5
+### es 5
 Scrivere un programma che decrementa il valore dell'accumulatore finchè non raggiunge lo 0.
 Ad esempio se l'accumulatore contiene 20, il programma deve decrementare `a` fino ad arrivare a 0 per poi fermarsi. (20, 19, 18, 17, 16, ..., 3, 2, 1, 0)
 
-## es 6
+### es 6
 Scrivere un programma che partendo dalla cella di memoria 0x1000 setti le 20 celle consecutive con il valore 0x00.
 
-## es 7
+### es 7
 Scrivere un programma che scrive in memoria a partire dall'indirizzo 0x1000 la sequenza di numeri 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ... fino a 100.
 
-## es 8
+### es 8
 Scrivere un programma che somma il contenuto di 4 celle consecutive situate all'indirizzo 0x1000; caricare le 4 celle utilizzando `.db` ed utilizzando un ciclo calcolare la somma e salvarla nel reg. `c`.  
 *Suggerimento: sai a priori che le celle sono 4, quindi usa un registro come contatore che viene decrementato partendo da 4*
 
-## es 9
+### es 9
 Calcolare la lunghezza di una stringa salvata all'indirizzo 0x1000.
 
-## es 10
+### es 10
 Dati 2 numeri fare la moltiplicazione tra i due numeri, e salvare il risultato in 0x1000.  
 
-## es 10.5
+### es 10.5
 Dati 2 numeri fare la divisione tra i due numeri, e salvare il risultato in 0x1000. 
 (supponi che i numeri siano uno multiplo dell'altro, quindi facendo le sottrazioni succcessive prima o poi si ottiene 0).
 
-## es 11 (verifica 2017/2018)
+### es 11 (verifica 2017/2018)
 Date 2 stringhe s1 e s2:
 - Determina quale delle due è più corta.
 - Se **s1<=s2 poni `d` = 1**, mentre se **s1 > s2 poni `d` = 2**
 
-## es 12
+### es 12
 Data una stringa salvata all'indirizzo 0x1000, trasformare la stringa in maiuscolo e risalvala nella stessa posizione. (supponi che la stringa abbia solo lettere minuscole)
 
-## es 13
+### es 13
 Data una stringa salvata all'indirizzo 0x1000, scrivi un programma che me la copi all'indirizzo 0x2000. Es "ciao" è da 0x1000 – 0x1003, il programma deve porre "ciao" a 0x2000-0x2003.
 
-## es 14 (verifica 2017/2018)
+### es 14 (verifica 2017/2018)
 Data una stringa salvata a apartire dall’ind 0x1000, scrivi un programma che ponga la stessa stringa in forma maiuscola a partire da 0x2000 Es “ciao” è da 0x1000 – 0x1003, il programma deve porre “CIAO” a 0x2000-0x2003.
 
-## es 15
+### es 15
 Data una stringa calcolare quante volte compare la lettera "a" al suo interno. Salvare il risultato in 0x1000. Ad esempio per "ciao, come va la vita?" bisogna salvare 4
 
-## es 16 
+### es 16 
 Data una stringa calcolare quante volte compaiono le vocali. Salvare il risultato in 0x1000.
 Ad esempio per "ciao, come va la vita?" bisogna salvare 9
 
-## es 17 (verifica 2017/2018)
+### es 17 (verifica 2017/2018)
 Date 2 stringhe s1 e s2:
 - Verificare se queste sono uguali o meno.
 - Se queste sono uguali poni a = 1, altrimenti a = 0.
