@@ -163,6 +163,7 @@ Ind. memoria | Valore
 0x0001 | 0x62
 0x0002 | 0x63
 0x0003 | 0x00
+
 *I valori sono il codice ascci dei caratteri*
 
 ### `.db n`
