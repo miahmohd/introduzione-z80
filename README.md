@@ -85,3 +85,51 @@ ld b, (de)
 ld (de), c
 ...
 ```
+
+## Operazioni aritmetiche
+### `add A, n` e `sub A, n`
+Queste istruzioni servono, ripettivamente, per sommare o sottrarre al reg. `a` il numero *n*.
+Il risultato dell'operazione viene salvato in `a`.
+```
+ld a, 5
+sub a, 4
+add a, 2
+```
+al termine dell'esecuzione mi ritrovo in `a` il numero *3*.
+
+Visto che queste operazioni sono possibili solo coll'accumulatore è possibile omettere il registro nell'istruzione:
+```
+ld a, 5
+sub 4
+add 2
+```
+ha lo stesso risultato di prima.
+
+### `add A, r` e `sub A, r`
+Queste varianti servono per sommare o sottrarre al reg. `a` il numero contenuto nel reg. `r`.
+```
+ld a, 5
+ld b, 4
+ld c, 2
+
+sub a, b
+add a, c
+```
+al termine dell'esecuzione mi ritrovo in `a` il numero *3*.
+
+*Valgono le stesse osservazioni di prima*
+
+### `inc r` e `dec r`
+Servono rispettivamente ad incrementare o decrementare di *1* il registro `r`.
+
+`inc a` equivale ad `add a, 1` --
+
+`dec a` equivale ad `sub a, 1` --
+
+```
+ld b, 0
+inc b
+inc b
+inc b
+```
+al termine b conterra *3*
