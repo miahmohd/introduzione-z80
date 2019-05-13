@@ -53,9 +53,8 @@ ld a, (0x1020)
 
 
 ### `ld r, (HL)` e `ld (HL), r`
-Questa è la versione di `ld` che viene utilizzata per il trasferimento di valori tra un registro qualsiasi `r` e la cella di memoria indirizzata da `hl`.
-
-Questo metodo si chiama **caricamento indiretto**.
+Questa è la versione di `ld` che viene utilizzata per il trasferimento di valori tra un registro qualsiasi `r` e la cella di memoria indirizzata da `hl`.  
+Questo metodo si chiama **caricamento indiretto**.  
 
 Ad esempio se volessi caricare il contenuto della cella *0x1020* nel registro `b` non posso fare `ld b, (0x1020)`, ma devo caricare in `hl` il valore *0x1020* e in seguito fare `ld b, (hl)`.
 ```
@@ -71,7 +70,7 @@ ld b, (hl)
 ld hl, 0x0020
 ld (hl), b
 ```
-***Osservazioni***: utilizzando `hl` è possibile utilizzare un qualsiasi registro per il caricamento anche `a`.
+***Osservazioni***: utilizzando `hl` è possibile utilizzare un qualsiasi registro per il caricamento anche `a`.  
 Però se volessi utilizzare un'altro registro a 16 bit diverso da `hl`, quindi o `bc` o `de` il caricamento indiretto funziona solo con il registro `a`.
 Funzionano:
 ```
@@ -117,16 +116,12 @@ ld c, 2
 sub a, b
 add a, c
 ```
-al termine dell'esecuzione mi ritrovo in `a` il numero *3*.
-
+al termine dell'esecuzione mi ritrovo in `a` il numero *3*.  
 *Valgono le stesse osservazioni di prima*
 
 ### `inc r` e `dec r`
-Servono rispettivamente ad incrementare o decrementare di *1* il registro `r`.
-
-`inc a` equivale ad `add a, 1`
-
-
+Servono rispettivamente ad incrementare o decrementare di *1* il registro `r`.  
+`inc a` equivale ad `add a, 1`  
 `dec a` equivale ad `sub a, 1`
 
 ```
