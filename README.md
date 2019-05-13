@@ -188,6 +188,7 @@ ld a, (hl)
 .asciz "abcd"
 ```
 in questo codice utilizzo `.org` e  `.asciz` per salvare la stringa *"abcdef"* a partire dall'indirizzo *0x1000*, sempre tenendo in mente il funzionamento di `.asciz` quindi un carattere per cella di memoria in celle consecutive.
+
 Ind. memoria | Valore
 --- | ---
 0x1000 | 0x61
@@ -306,3 +307,5 @@ sub a, 7    ;7-7=0 ==> z=1, a=0
 cp 7        ;0-7=-7 ==> z=0
 cp 0        ;0-0=0 ==> z=1     
 ```
+
+*Nota: i flags nel simulatore sono rossi quando valgono 1 (attivi)*
