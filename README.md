@@ -195,7 +195,7 @@ Ind. memoria | Valore
 0x1001 | 0x62
 0x1002 | 0x63
 0x1003 | 0x64
-0x1003 | 0x00
+0x1004 | 0x00
 
 
 Alla fine dell'esecuzione avrò in `a` il valore *0x61* (esadecimale di *'a'*). Perchè la *'a'* si trova nella cella *0x1000*, ed utilizzo il caricamento indiretto per caricare in `a` il valore della cella *0x1000*. 
@@ -545,3 +545,45 @@ Date 2 stringhe s1 e s2:
 
 Supponi che le due stringhe abbiano la stessa lunghezza.  
 (Suggerimento: salva i due caratteri nella stessa posizione uno in `a` l'altro in `b` così puoi fare `cp b`....)
+
+### es 18
+Il programma accetta un valore come parametro, che viene passato nel reg. C
+Il programma utilizza questo valore per calcolare un numero che viene salvato in 0x1000.
+Il numero calcolato è il risultato di quale espressione algebrica?
+es. c*(c-1)*(c+1); c+c+c; (c+3)*(c+1); c+1+1+1...; ...
+es. il programm calcola la radice di C; calcola il triplo di C....
+```
+ld c, 2
+
+ld a, 0
+ld d, c
+
+ciclo_esterno:
+    ld b, c
+
+    ciclo_interno:
+        add a, c
+        dec b
+        jp nz, ciclo_interno
+        
+    dec d
+    jp nz, ciclo_esterno
+
+fine_esterno:
+    ld (0x1000), a
+    halt
+```
+
+### es 19
+Scrivi un programma che, data una sequenza di 0 ed 1 lunga 10, mi trasforma gli 1 della sequenza in 0, e gli 0 in 1.
+Ad esempio la sequenza 0110101011 viene trasformata in 1001001100.
+
+### es 20
+Scrivi un programma che a partire dall'indirizzo 0x1000 salvi la sequenza di numeri che parte da 0, arriva fino a 100 e torna a 0.
+es. 0 1 2 3 4 ... 96 97 98 99 100 99 98 97 96 ... 4 3 2 1 0.
+
+### es 21
+Data una stringa salavata dalla pos. 0x1000, ricopiare soltanto i caratteri in posizione dispari
+nelle celle a partire da 0x2000.
+esempio "abcdefg" occupa 0x1000-0x1006,
+il programma deve savare la stringa "aceg" in 0x2000-0x2003
